@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Properties Button</title>
+    <style>
+        /* Background gradient */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+        }
+
+        /* Card container */
+        .container {
+            background-color: #ffffffdd; /* semi-transparent white */
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Button styling */
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover state */
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Active click state */
+        button:active {
+            background-color: #003d80;
+            transform: scale(0.98);
+        }
+
+        /* Disabled state */
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Date badge styling */
+        #currentDate {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745; /* green badge */
+            padding: 6px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            min-width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="postButton">Post Properties on Facebook</button>
+        <span id="currentDate"></span>
+    </div>
+
+    <script>
+        const button = document.getElementById('postButton');
+        const dateSpan = document.getElementById('currentDate');
+
+        // Function to get Texas date (Central Time)
+        function getTexasDate() {
+            const now = new Date();
+            return now.toLocaleDateString('en-US', { timeZone: 'America/Chicago' });
+        }
+
+        // Update displayed date
+        function updateDate() {
+            dateSpan.textContent = getTexasDate();
+        }
+
+        // Reset button daily based on Texas date
+        function checkReset() {
+            const lastClickDate = localStorage.getItem('lastClickDate');
+            const today = getTexasDate();
+
+            if (lastClickDate !== today) {
+                button.disabled = false;
+                localStorage.setItem('lastClickDate', today);
+            }
+        }
+
+        // Button click
+        button.addEventListener('click', () => {
+            alert('Posted properties on Facebook!'); // placeholder action
+            button.disabled = true;
+        });
+
+        // Initialize
+        updateDate();
+        checkReset();
+
+        // Update date every minute
+        setInterval(updateDate, 60000);
+    </script>
+</body>
+</html>
